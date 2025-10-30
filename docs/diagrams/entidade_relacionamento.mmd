@@ -1,0 +1,66 @@
+---
+config:
+  theme: dark
+---
+erDiagram
+  Cliente {
+    int id_cliente
+    string email
+    string senha
+    string nome
+    string telefone
+  }
+
+  Forma_Pagamento["Forma Pagamento"]  {
+    int id_cartao
+    string numero_cartao
+    string nome_titular
+    date vencimento
+    string cvv
+  }
+
+  Estabelecimento {
+    int id_estabelecimento
+    string cnpj
+    string nome_fantasia
+  }
+
+  Endereco["Endereço"] {
+    int id_endereco
+    string cep
+    int numero
+    string rua
+    string complemento
+    string bairro
+    string cidade
+    string estado
+  }
+
+  Prato {
+    int id_prato
+    string nome
+    text ingredientes
+  }
+
+  Pedido {
+    int id_pedido
+  }
+
+  Oferta {
+    int id_oferta
+    date dia
+    decimal valor
+    int quantidade
+  }
+
+  Carrinho {
+    int id_carrinho
+  }
+
+  Cliente }|..o{ Forma_Pagamento : cadastra
+  Estabelecimento |o..|| Endereco : localizado_em
+  Cliente }|..|{ Endereco : recebe_em
+  Estabelecimento ||..o{ Oferta : oferece
+  Oferta }o--|| Prato : oferta
+  Pedido }o..|{ Oferta : "contém"
+  Carrinho }o..|{ Oferta : "contém"
