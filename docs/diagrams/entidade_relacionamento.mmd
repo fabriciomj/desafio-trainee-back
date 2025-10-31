@@ -57,10 +57,14 @@ erDiagram
     int id_carrinho
   }
 
-  Cliente }|..o{ Forma_Pagamento : cadastra
-  Estabelecimento |o..|| Endereco : localizado_em
-  Cliente }|..|{ Endereco : recebe_em
-  Estabelecimento ||..o{ Oferta : oferece
+  Cliente }|--o{ Forma_Pagamento : cadastra
+  Estabelecimento |o--|| Endereco : "localizado em"
+  Cliente }|--|{ Endereco : "recebe em"
+  Estabelecimento ||--o{ Oferta : oferece
   Oferta }o--|| Prato : oferta
-  Pedido }o..|{ Oferta : "contém"
-  Carrinho }o..|{ Oferta : "contém"
+  Pedido }o--|{ Oferta : "contém"
+  Carrinho }o--|{ Oferta : "contém"
+  Cliente ||--|| Carrinho : possui
+  Cliente ||--o{ Pedido : realiza
+  Estabelecimento ||--o{ Pedido : recebe
+  Estabelecimento ||--|{ Prato : prepara
