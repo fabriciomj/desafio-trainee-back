@@ -22,6 +22,7 @@ erDiagram
   Estabelecimento {
     int id_estabelecimento
     string cnpj
+    string razao_social
     string nome_fantasia
   }
 
@@ -44,6 +45,7 @@ erDiagram
 
   Pedido {
     int id_pedido
+    enum status
   }
 
   Oferta {
