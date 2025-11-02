@@ -1,4 +1,4 @@
-from pathlib import Path
+from pathlib import Path  # noqa: D100
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,7 +40,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "fabricio.urls"
 
-TEMPLATES = [
+TEMPLATES = [  # pyright: ignore[reportUnknownVariableType]
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -61,7 +61,7 @@ WSGI_APPLICATION = "fabricio.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {  # pyright: ignore[reportUnknownVariableType]
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
