@@ -4,24 +4,44 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = [
-    "django>=5.2.7",
-    "djangorestframework>=3.16.1",
-]
+dependencies = ["django>=5.2.7", "djangorestframework>=3.16.1"]
 
 [tool.ruff]
 extend-exclude = ["manage.py"]
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D203", "E501", "COM812"]
-
-[tool.ruff.lint.per-file-ignores]
-"**/apps.py" = ["D100", "D101"]
-"**/settings.py" = ["D100"]
-"**/wsgi.py" = ["D100"]
-"**/asgi.py" = ["D100"]
-"**/__init__.py" = ["D104"]
+ignore = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "ANN",
+    "W191",
+    "E111",
+    "E114",
+    "E117",
+    "D206",
+    "D300",
+    "Q000",
+    "Q001",
+    "Q002",
+    "Q003",
+    "COM812",
+    "COM819",
+    "E501",
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportUnknownParameterType = false
+reportIncompatibleMethodOverride = false
+reportUnknownArgumentType = false
+reportMissingParameterType = false
