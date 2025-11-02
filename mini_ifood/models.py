@@ -62,3 +62,27 @@ class Estabelecimento(models.Model):
         validators=[RegexValidator(NOME_PAT)],
         blank=True,
     )
+
+
+class Prato(models.Model):
+    pass
+
+
+class FormaPagamento(models.Model):
+    pass
+
+
+class Carrinho(models.Model):
+    pass
+
+
+class Oferta(models.Model):
+    pass
+
+
+class Pedido(models.Model):
+    pass
+
+
+class Endereco(models.Model):
+    pass
