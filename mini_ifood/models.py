@@ -3,21 +3,19 @@ import re
 from django.core.validators import RegexValidator
 from django.db import models
 
+NOME_PESSOA_PAT = re.compile(
+    r"""
+    ^(?!\s)                                                             # Não pode começar com espaço
+    [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+                           # Um prenome
+    ((\ (da|das|do|dos))?\ [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+)+  # Espaço mais sobrenome, com conjução opcional, 1+ vezes
+    (?<!\s)$                                                            # Não pode terminar com espaço
+    """,
+    re.VERBOSE,
+)
+
 
 class Cliente(models.Model):
-    NOME_PAT = re.compile(
-        r"""
-        ^(?!\s)                                                             # Não pode começar com espaço
-        [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+                           # Um prenome
-        ((\ (da|das|do|dos))?\ [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+)+  # Espaço mais sobrenome, com conjução opcional, 1+ vezes
-        (?<!\s)$                                                            # Não pode terminar com espaço
-        """,
-        re.VERBOSE,
-    )
-    nome = models.CharField(
-        max_length=80,
-        validators=[RegexValidator(NOME_PAT)],
-    )
+    nome = models.CharField(max_length=80, validators=[RegexValidator(NOME_PESSOA_PAT)])
 
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=30)
