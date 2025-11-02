@@ -55,11 +55,21 @@ class Estabelecimento(models.Model):
 
 
 class Prato(models.Model):
-    pass
+    nome = models.CharField(max_length=50)
+    ingredientes = models.TextField()
 
 
 class FormaPagamento(models.Model):
-    pass
+    numero_cartao = models.CharField(
+        max_length=16, validators=[RegexValidator(r"^[0-9]{16}$")]
+    )
+    nome_titular = models.CharField(
+        max_length=20, validators=[RegexValidator(NOME_PESSOA_PAT)]
+    )
+
+    def save(self, **kwargs):
+        self.nome_titular = self.nome_titular.capitalize()
+        super().save(**kwargs)
 
 
 class Carrinho(models.Model):
