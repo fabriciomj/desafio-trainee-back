@@ -28,17 +28,13 @@ class Cliente(models.Model):
         re.VERBOSE,
     )
     telefone = models.CharField(
-        max_length=11,
-        unique=True,
-        validators=[RegexValidator(TELEFONE_PAT)],
+        max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
 
 
 class Estabelecimento(models.Model):
     cnpj = models.CharField(
-        max_length=14,
-        validators=[RegexValidator(r"^[0-9]{14}$")],
-        unique=True,
+        max_length=14, validators=[RegexValidator(r"^[0-9]{14}$")], unique=True
     )
 
     NOME_PAT = re.compile(
