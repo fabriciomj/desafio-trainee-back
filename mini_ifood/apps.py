@@ -1,6 +1,6 @@
-from django.apps import AppConfig  # noqa: D100
+from django.apps import AppConfig
 
 
-class MiniIfoodConfig(AppConfig):  # noqa: D101
+class MiniIfoodConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "mini_ifood"
