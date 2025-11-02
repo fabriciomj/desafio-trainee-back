@@ -37,7 +37,7 @@ class Estabelecimento(models.Model):
         max_length=14, validators=[RegexValidator(r"^[0-9]{14}$")], unique=True
     )
 
-    NOME_PAT = re.compile(
+    NOME_EMPRESA_PAT = re.compile(
         r"""
         ^(?!\s)     # Não pode começar com espaço
         \S+         # Palavra com qualquer char não espaço
@@ -47,14 +47,10 @@ class Estabelecimento(models.Model):
         re.VERBOSE,
     )
     razao_social = models.CharField(
-        max_length=50,
-        validators=[RegexValidator(NOME_PAT)],
-        unique=True,
+        max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], unique=True
     )
     nome_fantasia = models.CharField(
-        max_length=50,
-        validators=[RegexValidator(NOME_PAT)],
-        blank=True,
+        max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], blank=True
     )
 
 
