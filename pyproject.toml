@@ -8,3 +8,10 @@ dependencies = [
     "django>=5.2.7",
     "djangorestframework>=3.16.1",
 ]
+
+[tool.ruff]
+extend-exclude = ["manage.py"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D203", "E501"]
