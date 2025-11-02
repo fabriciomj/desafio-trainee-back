@@ -7,12 +7,10 @@ from django.db import models
 class Cliente(models.Model):
     NOME_PAT = re.compile(
         r"""
-        ^
-        (?!\s)                                                                  # Não pode começar com espaço
-        (?:[A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+)                           # Um prenome
-        (?: (?:da|das|do|dos)(?: [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+))+   # Espaço mais conjunção/sobrenome, 1+ vezes
-        (?<!\s)                                                                 # Não pode terminar com espaço
-        $
+        ^(?!\s)                                                             # Não pode começar com espaço
+        [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+                           # Um prenome
+        ((\ (da|das|do|dos))?\ [A-ZÀ-ÂÈ-ÊÌ-ÎÒ-ÔÙ-Û][a-zà-ãç-êì-îò-õù-û]+)+  # Espaço mais sobrenome, com conjução opcional, 1+ vezes
+        (?<!\s)$                                                            # Não pode terminar com espaço
         """,
         re.VERBOSE,
     )
@@ -26,10 +24,8 @@ class Cliente(models.Model):
 
     TELEFONE_PAT = re.compile(
         r"""
-        ^
-        ([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])    # Possíveis DDDs do Brasil
-        (9[0-9]{8})                                             # Um 9 seguido de 8 digitos
-        $
+        ^([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])   # Possíveis DDDs do Brasil
+        9[0-9]{8}$                                              # Um 9 seguido de 8 digitos
         """,
         re.VERBOSE,
     )
@@ -49,12 +45,10 @@ class Estabelecimento(models.Model):
 
     NOME_PAT = re.compile(
         r"""
-        ^
-        (?!\s)          # Não pode começar com espaço
-        (?:\S+)         # Palavra com qualquer não espaço
-        (?: (?:\S+))*   # Um espaço seguido de uma palavra com qualquer não espaço, 0+ vezes
-        (?<!\s)         # Não pode terminar com espaço
-        $
+        ^(?!\s)     # Não pode começar com espaço
+        \S+         # Palavra com qualquer char não espaço
+        (\ \S+)*    # Um espaço seguido de uma palavra com qualquer char não espaço, 0+ vezes
+        (?<!\s)$    # Não pode terminar com espaço
         """,
         re.VERBOSE,
     )
