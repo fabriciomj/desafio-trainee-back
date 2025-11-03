@@ -1,6 +1,7 @@
 import re
+from datetime import date
 
-from django.core.validators import RegexValidator
+from django.core.validators import MinValueValidator, RegexValidator
 from django.db import models
 
 NOME_PESSOA_PAT = re.compile(
@@ -77,12 +78,57 @@ class Carrinho(models.Model):
 
 
 class Oferta(models.Model):
-    pass
+    data = models.DateField(default=date.today())  # noqa: DTZ011
+    valor = models.DecimalField(max_digits=7, decimal_places=2)
+    quantidade = models.PositiveIntegerField(validators=[MinValueValidator(1)])
 
 
 class Pedido(models.Model):
-    pass
+    class Status(models.TextChoices):
+        PAGAMENTO = "PM", "Aguardando Pagamento"
+        PAGO = "PG", "Pago"
+        RECEBIDO = "RE", "Pedido Recebido"
+        PREPARANDO = "PR", "Pedido em Preparo"
+        DELIVERY = "DL", "À Caminho"
+        ENTREGUE = "EN", "Entregue"
+
+    status = models.CharField(max_length=2, choices=Status, default=Status.PAGAMENTO)
 
 
 class Endereco(models.Model):
-    pass
+    class Estados(models.TextChoices):
+        AC = "AC", "Acre"
+        AL = "AL", "Alagoas"
+        AP = "AP", "Amapá"
+        AM = "AM", "Amazonas"
+        BA = "BA", "Bahia"
+        CE = "CE", "Ceará"
+        DF = "DF", "Distrito Federal"
+        ES = "ES", "Espirito Santo"
+        GO = "GO", "Goiás"
+        MA = "MA", "Maranhão"
+        MT = "MT", "Mato Grosso"
+        MS = "MS", "Mato Grosso do Sul"
+        MG = "MG", "Minas Gerais"
+        PA = "PA", "Pará"
+        PB = "PB", "Paraíba"
+        PR = "PR", "Paraná"
+        PE = "PE", "Pernambuco"
+        PI = "PI", "Piauí"
+        RJ = "RJ", "Rio de Janeiro"
+        RN = "RN", "Rio Grande do Norte"
+        RS = "RS", "Rio Grande do Sul"
+        RO = "RO", "Rondônia"
+        RR = "RR", "Roraima"
+        SC = "SC", "Santa Catarina"
+        SP = "SP", "São Paulo"
+        SE = "SE", "Sergipe"
+        TO = "TO", "Tocantins"
+
+    cep = models.CharField(max_length=8, validators=[RegexValidator(r"^[0-9]{8}$")])
+    rua = models.CharField(max_length=80)
+    numero = models.PositiveIntegerField()
+    bairro = models.CharField(max_length=80)
+    cidade = models.CharField(max_length=80)
+    estado = models.CharField(max_length=2, choices=Estados)
+    complemento = models.CharField(max_length=40)
