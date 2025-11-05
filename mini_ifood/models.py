@@ -1,7 +1,7 @@
 import re
 from datetime import date
 
-from django.core.validators import MinValueValidator, RegexValidator
+from django.core.validators import RegexValidator
 from django.db import models
 
 NOME_PESSOA_PAT = re.compile(
@@ -13,27 +13,31 @@ NOME_PESSOA_PAT = re.compile(
     """,
     re.VERBOSE,
 )
+TELEFONE_PAT = re.compile(
+    r"""
+    ^([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])   # Possíveis DDDs do Brasil
+    9[0-9]{8}$                                              # Um 9 seguido de 8 digitos
+    """,
+    re.VERBOSE,
+)
 
 
-class Cliente(models.Model):
-    nome = models.CharField(max_length=80, validators=[RegexValidator(NOME_PESSOA_PAT)])
-
+class Usuario(models.Model):
     email = models.EmailField(unique=True)
     senha = models.CharField(max_length=30)
 
-    TELEFONE_PAT = re.compile(
-        r"""
-        ^([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])   # Possíveis DDDs do Brasil
-        9[0-9]{8}$                                              # Um 9 seguido de 8 digitos
-        """,
-        re.VERBOSE,
-    )
+
+class Cliente(Usuario):
+    nome = models.CharField(max_length=80, validators=[RegexValidator(NOME_PESSOA_PAT)])
     telefone = models.CharField(
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
+    formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
+    carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
+    enderecos = models.ManyToManyField("Endereço")
 
 
-class Estabelecimento(models.Model):
+class Estabelecimento(Usuario):
     cnpj = models.CharField(
         max_length=14, validators=[RegexValidator(r"^[0-9]{14}$")], unique=True
     )
@@ -53,11 +57,10 @@ class Estabelecimento(models.Model):
     nome_fantasia = models.CharField(
         max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], blank=True
     )
-
-
-class Prato(models.Model):
-    nome = models.CharField(max_length=50)
-    ingredientes = models.TextField()
+    telefone = models.CharField(
+        max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
+    )
+    endereco = models.OneToOneField("Endereco", on_delete=models.PROTECT)
 
 
 class FormaPagamento(models.Model):
@@ -73,14 +76,21 @@ class FormaPagamento(models.Model):
         super().save(**kwargs)
 
 
+class Prato(models.Model):
+    nome = models.CharField(max_length=50)
+    ingredientes = models.TextField()
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
+
+
 class Carrinho(models.Model):
-    pass
+    ofertas = models.ManyToManyField("Oferta", blank=True)
 
 
 class Oferta(models.Model):
     data = models.DateField(default=date.today())  # noqa: DTZ011
     valor = models.DecimalField(max_digits=7, decimal_places=2)
-    quantidade = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    quantidade = models.PositiveIntegerField()
+    prato = models.ForeignKey(Prato, on_delete=models.CASCADE)
 
 
 class Pedido(models.Model):
@@ -93,6 +103,9 @@ class Pedido(models.Model):
         ENTREGUE = "EN", "Entregue"
 
     status = models.CharField(max_length=2, choices=Status, default=Status.PAGAMENTO)
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.PROTECT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    ofertas = models.ManyToManyField(Oferta)
 
 
 class Endereco(models.Model):
