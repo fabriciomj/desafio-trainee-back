@@ -45,3 +45,4 @@ reportUnknownParameterType = false
 reportIncompatibleMethodOverride = false
 reportUnknownArgumentType = false
 reportMissingParameterType = false
+reportUnknownVariableType = false
