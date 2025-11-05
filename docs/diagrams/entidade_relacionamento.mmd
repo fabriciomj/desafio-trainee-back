@@ -3,10 +3,14 @@ config:
   theme: dark
 ---
 erDiagram
-  Cliente {
-    int id_cliente
+  Usuario {
+    int id_usuario
     string email
     string senha
+  }
+
+  Cliente {
+    int id_cliente
     string nome
     string telefone
   }
@@ -24,6 +28,7 @@ erDiagram
     string cnpj
     string razao_social
     string nome_fantasia
+    string telefone
   }
 
   Endereco["Endereço"] {
@@ -59,12 +64,14 @@ erDiagram
     int id_carrinho
   }
 
+  Usuario ||--o| Cliente : "do tipo"
+  Usuario ||--o| Estabelecimento : "do tipo"
   Cliente }|--o{ Forma_Pagamento : cadastra
   Estabelecimento |o--|| Endereco : "localizado em"
   Cliente }|--|{ Endereco : "recebe em"
   Oferta }o--|| Prato : oferta
   Pedido }o--|{ Oferta : "contém"
-  Carrinho }o--|{ Oferta : "contém"
+  Carrinho }o--o{ Oferta : "contém"
   Cliente ||--|| Carrinho : possui
   Cliente ||--o{ Pedido : realiza
   Estabelecimento ||--o{ Pedido : recebe
