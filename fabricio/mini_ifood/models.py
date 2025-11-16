@@ -34,7 +34,7 @@ class Cliente(Usuario):
     )
     formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
     carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
-    enderecos = models.ManyToManyField("Endereço")
+    enderecos = models.ManyToManyField("Endereco")
 
 
 class Estabelecimento(Usuario):
@@ -71,7 +71,7 @@ class FormaPagamento(models.Model):
         max_length=20, validators=[RegexValidator(NOME_PESSOA_PAT)]
     )
 
-    def save(self, **kwargs):
+    def save(self, **kwargs): # pyright: ignore[reportIncompatibleMethodOverride]
         self.nome_titular = self.nome_titular.capitalize()
         super().save(**kwargs)
 
