@@ -40,7 +40,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "fabricio.urls"
 
-TEMPLATES = [  # pyright: ignore[reportUnknownVariableType]
+TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [],
@@ -57,6 +57,10 @@ TEMPLATES = [  # pyright: ignore[reportUnknownVariableType]
 
 WSGI_APPLICATION = "fabricio.wsgi.application"
 
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 10,
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
