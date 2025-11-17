@@ -1,6 +1,5 @@
 import re
 
-from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -22,7 +21,10 @@ TELEFONE_PAT = re.compile(
 )
 
 
-class Cliente(User):
+class Cliente(models.Model):
+    usuario = models.ForeignKey(
+        "auth.User", related_name="cliente", on_delete=models.CASCADE
+    )
     nome = models.CharField(max_length=80, validators=[RegexValidator(NOME_PESSOA_PAT)])
     telefone = models.CharField(
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
@@ -32,7 +34,10 @@ class Cliente(User):
     enderecos = models.ManyToManyField("Endereco")
 
 
-class Estabelecimento(User):
+class Estabelecimento(models.Model):
+    usuario = models.ForeignKey(
+        "auth.User", related_name="estabelecimento", on_delete=models.CASCADE
+    )
     cnpj = models.CharField(
         max_length=14, validators=[RegexValidator(r"^[0-9]{14}$")], unique=True
     )
