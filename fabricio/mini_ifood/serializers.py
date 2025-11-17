@@ -10,7 +10,6 @@ from fabricio.mini_ifood.models import (
     Oferta,
     Pedido,
     Prato,
-    Usuario,
 )
 
 
@@ -72,9 +71,3 @@ class PratoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prato
         fields = ["nome", "ingredientes", "estabelecimento"]
-
-
-class UsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = ["email", "senha"]
