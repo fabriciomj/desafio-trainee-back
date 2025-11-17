@@ -71,7 +71,7 @@ class FormaPagamento(models.Model):
         max_length=20, validators=[RegexValidator(NOME_PESSOA_PAT)]
     )
 
-    def save(self, **kwargs): # pyright: ignore[reportIncompatibleMethodOverride]
+    def save(self, **kwargs):  # pyright: ignore[reportIncompatibleMethodOverride]
         self.nome_titular = self.nome_titular.capitalize()
         super().save(**kwargs)
 
@@ -87,7 +87,7 @@ class Carrinho(models.Model):
 
 
 class Oferta(models.Model):
-    data = models.DateField(default=date.today())  # noqa: DTZ011
+    data = models.DateField(auto_now_add=True)
     valor = models.DecimalField(max_digits=7, decimal_places=2)
     quantidade = models.PositiveIntegerField()
     prato = models.ForeignKey(Prato, on_delete=models.CASCADE)
