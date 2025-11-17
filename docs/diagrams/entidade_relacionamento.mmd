@@ -3,10 +3,7 @@ config:
   theme: dark
 ---
 erDiagram
-  Usuario {
-    int id_usuario
-    string email
-    string senha
+  User["django.contrib.auth.models.User"] {
   }
 
   Cliente {
@@ -64,8 +61,8 @@ erDiagram
     int id_carrinho
   }
 
-  Usuario ||--o| Cliente : "do tipo"
-  Usuario ||--o| Estabelecimento : "do tipo"
+  User ||--o| Cliente : "do tipo"
+  User ||--o| Estabelecimento : "do tipo"
   Cliente }|--o{ Forma_Pagamento : cadastra
   Estabelecimento |o--|| Endereco : "localizado em"
   Cliente }|--|{ Endereco : "recebe em"
