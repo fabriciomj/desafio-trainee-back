@@ -23,7 +23,7 @@ class ClienteSerializer(serializers.ModelSerializer):
         fields = ["nome", "telefone", "endereco", "formas_pagamento", "carrinho"]
 
 
-class EstabelecimentoSerializer(serializers.ModelSerializer):
+class EstabelecimentoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Estabelecimento
         fields = ["url", "nome", "endereco"]
@@ -35,7 +35,7 @@ class FormaPagamentoSerializer(serializers.ModelSerializer):
         fields = ["numero_cartao", "nome_titular"]
 
 
-class OfertaSerializer(serializers.ModelSerializer):
+class OfertaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Oferta
         fields = ["data", "valor", "quantidade", "prato"]
