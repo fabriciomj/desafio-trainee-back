@@ -12,16 +12,17 @@ NOME_PESSOA_PAT = re.compile(
     """,
     re.VERBOSE,
 )
-TELEFONE_PAT = re.compile(
-    r"""
-    ^([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])   # Possíveis DDDs do Brasil
-    9[0-9]{8}$                                              # Um 9 seguido de 8 digitos
-    """,
-    re.VERBOSE,
-)
 
 
 class Cliente(models.Model):
+    TELEFONE_PAT = re.compile(
+        r"""
+    ^([14689][1-9]|2[12478]|3[1234578]|5[1345]|7[134579])   # Possíveis DDDs do Brasil
+    9[0-9]{8}$                                              # Um 9 seguido de 8 digitos
+    """,
+        re.VERBOSE,
+    )
+
     usuario = models.ForeignKey(
         "auth.User", related_name="cliente", on_delete=models.CASCADE
     )
@@ -35,13 +36,6 @@ class Cliente(models.Model):
 
 
 class Estabelecimento(models.Model):
-    usuario = models.ForeignKey(
-        "auth.User", related_name="estabelecimento", on_delete=models.CASCADE
-    )
-    cnpj = models.CharField(
-        max_length=14, validators=[RegexValidator(r"^[0-9]{14}$")], unique=True
-    )
-
     NOME_EMPRESA_PAT = re.compile(
         r"""
         ^(?!\s)     # Não pode começar com espaço
@@ -51,14 +45,12 @@ class Estabelecimento(models.Model):
         """,
         re.VERBOSE,
     )
-    razao_social = models.CharField(
-        max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], unique=True
+
+    usuario = models.ForeignKey(
+        "auth.User", related_name="estabelecimento", on_delete=models.CASCADE
     )
-    nome_fantasia = models.CharField(
+    nome = models.CharField(
         max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], blank=True
-    )
-    telefone = models.CharField(
-        max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
     endereco = models.CharField(max_length=100)
 
