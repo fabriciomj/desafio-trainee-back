@@ -9,7 +9,7 @@ from mini_ifood.models import (
     Pedido,
     Prato,
 )
-from mini_ifood.permissions import IsOwner, IsOwnerOrAuthenticated
+from mini_ifood.permissions import IsAuthenticatedReadOnly, IsOwner
 from mini_ifood.serializers import (
     CarrinhoSerializer,
     ClienteSerializer,
@@ -36,7 +36,7 @@ class ClienteViewSet(viewsets.ModelViewSet):
 class EstabelecimentoViewSet(viewsets.ModelViewSet):
     queryset = Estabelecimento.objects.all()
     serializer_class = EstabelecimentoSerializer
-    permission_classes = [IsOwnerOrAuthenticated]
+    permission_classes = [IsOwner | IsAuthenticatedReadOnly]
 
 
 class FormaPagamentoViewSet(viewsets.ModelViewSet):
@@ -48,7 +48,7 @@ class FormaPagamentoViewSet(viewsets.ModelViewSet):
 class OfertaViewSet(viewsets.ModelViewSet):
     queryset = Oferta.objects.all()
     serializer_class = OfertaSerializer
-    permission_classes = [IsOwnerOrAuthenticated]
+    permission_classes = [IsOwner | IsAuthenticatedReadOnly]
 
 
 class PedidoViewSet(viewsets.ModelViewSet):
@@ -60,4 +60,4 @@ class PedidoViewSet(viewsets.ModelViewSet):
 class PratoViewSet(viewsets.ModelViewSet):
     queryset = Prato.objects.all()
     serializer_class = PratoSerializer
-    permission_classes = [IsOwnerOrAuthenticated]
+    permission_classes = [IsOwner | IsAuthenticatedReadOnly]
