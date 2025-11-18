@@ -6,7 +6,6 @@ from mini_ifood import views
 router = routers.DefaultRouter()
 
 to_register = [
-    (r"users", views.UserViewSet),
     (r"carrinhos", views.CarrinhoViewSet),
     (r"clientes", views.ClienteViewSet),
     (r"enderecos", views.EnderecoViewSet),

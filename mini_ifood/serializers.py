@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from mini_ifood.models import (
@@ -11,12 +10,6 @@ from mini_ifood.models import (
     Pedido,
     Prato,
 )
-
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ["url", "username", "email", "groups"]
 
 
 class CarrinhoSerializer(serializers.ModelSerializer):
