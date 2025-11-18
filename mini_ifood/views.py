@@ -3,7 +3,6 @@ from rest_framework import viewsets
 from mini_ifood.models import (
     Carrinho,
     Cliente,
-    Endereco,
     Estabelecimento,
     FormaPagamento,
     Oferta,
@@ -13,7 +12,6 @@ from mini_ifood.models import (
 from mini_ifood.serializers import (
     CarrinhoSerializer,
     ClienteSerializer,
-    EnderecoSerializer,
     EstabelecimentoSerializer,
     FormaPagamentoSerializer,
     OfertaSerializer,
@@ -30,11 +28,6 @@ class CarrinhoViewSet(viewsets.ModelViewSet):
 class ClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
-
-
-class EnderecoViewSet(viewsets.ModelViewSet):
-    queryset = Endereco.objects.all()
-    serializer_class = EnderecoSerializer
 
 
 class EstabelecimentoViewSet(viewsets.ModelViewSet):

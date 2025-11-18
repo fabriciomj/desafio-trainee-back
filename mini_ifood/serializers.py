@@ -3,7 +3,6 @@ from rest_framework import serializers
 from mini_ifood.models import (
     Carrinho,
     Cliente,
-    Endereco,
     Estabelecimento,
     FormaPagamento,
     Oferta,
@@ -22,12 +21,6 @@ class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
         fields = ["nome", "telefone", "formas_pagamento", "carrinho", "enderecos"]
-
-
-class EnderecoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Endereco
-        fields = ["cep", "rua", "numero", "bairro", "cidade", "estado", "complemento"]
 
 
 class EstabelecimentoSerializer(serializers.ModelSerializer):

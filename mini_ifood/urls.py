@@ -8,7 +8,6 @@ router = routers.DefaultRouter()
 to_register = [
     (r"carrinhos", views.CarrinhoViewSet),
     (r"clientes", views.ClienteViewSet),
-    (r"enderecos", views.EnderecoViewSet),
     (r"estabelecimentos", views.EstabelecimentoViewSet),
     (r"pagamentos", views.FormaPagamentoViewSet),
     (r"ofertas", views.OfertaViewSet),

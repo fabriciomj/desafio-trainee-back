@@ -7,6 +7,7 @@ erDiagram
     int id_cliente
     string nome
     string telefone
+    string endereco
   }
 
   Forma_Pagamento["Forma Pagamento"]  {
@@ -25,15 +26,7 @@ erDiagram
     string telefone
   }
 
-  Endereco["Endereço"] {
-    int id_endereco
-    string cep
-    int numero
-    string rua
-    string complemento
-    string bairro
-    string cidade
-    string estado
+    string endereco
   }
 
   Prato {
@@ -59,8 +52,6 @@ erDiagram
   }
 
   Cliente }|--o{ Forma_Pagamento : cadastra
-  Estabelecimento |o--|| Endereco : "localizado em"
-  Cliente }|--|{ Endereco : "recebe em"
   Oferta }o--|| Prato : oferta
   Pedido }o--|{ Oferta : "contém"
   Carrinho }o--o{ Oferta : "contém"

@@ -29,9 +29,9 @@ class Cliente(models.Model):
     telefone = models.CharField(
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
+    endereco = models.CharField(max_length=100)
     formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
     carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
-    enderecos = models.ManyToManyField("Endereco")
 
 
 class Estabelecimento(models.Model):
@@ -60,7 +60,7 @@ class Estabelecimento(models.Model):
     telefone = models.CharField(
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
-    endereco = models.OneToOneField("Endereco", on_delete=models.PROTECT)
+    endereco = models.CharField(max_length=100)
 
 
 class FormaPagamento(models.Model):
@@ -107,42 +107,3 @@ class Pedido(models.Model):
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ofertas = models.ManyToManyField(Oferta)
-
-
-class Endereco(models.Model):
-    class Estados(models.TextChoices):
-        AC = "AC", "Acre"
-        AL = "AL", "Alagoas"
-        AP = "AP", "Amapá"
-        AM = "AM", "Amazonas"
-        BA = "BA", "Bahia"
-        CE = "CE", "Ceará"
-        DF = "DF", "Distrito Federal"
-        ES = "ES", "Espirito Santo"
-        GO = "GO", "Goiás"
-        MA = "MA", "Maranhão"
-        MT = "MT", "Mato Grosso"
-        MS = "MS", "Mato Grosso do Sul"
-        MG = "MG", "Minas Gerais"
-        PA = "PA", "Pará"
-        PB = "PB", "Paraíba"
-        PR = "PR", "Paraná"
-        PE = "PE", "Pernambuco"
-        PI = "PI", "Piauí"
-        RJ = "RJ", "Rio de Janeiro"
-        RN = "RN", "Rio Grande do Norte"
-        RS = "RS", "Rio Grande do Sul"
-        RO = "RO", "Rondônia"
-        RR = "RR", "Roraima"
-        SC = "SC", "Santa Catarina"
-        SP = "SP", "São Paulo"
-        SE = "SE", "Sergipe"
-        TO = "TO", "Tocantins"
-
-    cep = models.CharField(max_length=8, validators=[RegexValidator(r"^[0-9]{8}$")])
-    rua = models.CharField(max_length=80)
-    numero = models.PositiveIntegerField()
-    bairro = models.CharField(max_length=80)
-    cidade = models.CharField(max_length=80)
-    estado = models.CharField(max_length=2, choices=Estados)
-    complemento = models.CharField(max_length=40)
