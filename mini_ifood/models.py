@@ -1,5 +1,6 @@
 import re
 
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -23,14 +24,12 @@ class Cliente(models.Model):
         re.VERBOSE,
     )
 
-    usuario = models.ForeignKey(
-        "auth.User", related_name="cliente", on_delete=models.CASCADE
-    )
     nome = models.CharField(max_length=80, validators=[RegexValidator(NOME_PESSOA_PAT)])
     telefone = models.CharField(
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
     endereco = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
     carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
 
@@ -46,13 +45,11 @@ class Estabelecimento(models.Model):
         re.VERBOSE,
     )
 
-    usuario = models.ForeignKey(
-        "auth.User", related_name="estabelecimento", on_delete=models.CASCADE
-    )
     nome = models.CharField(
         max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], blank=True
     )
     endereco = models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class FormaPagamento(models.Model):
