@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import generics, permissions, viewsets
+from rest_framework import permissions, viewsets
 
 from mini_ifood.models import (
     Carrinho,
@@ -32,81 +32,41 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class CarrinhoList(generics.ListCreateAPIView):
+class CarrinhoViewSet(viewsets.ModelViewSet):
     queryset = Carrinho.objects.all()
     serializer_class = CarrinhoSerializer
 
 
-class CarrinhoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Carrinho.objects.all()
-    serializer_class = CarrinhoSerializer
-
-
-class ClienteList(generics.ListCreateAPIView):
+class ClienteViewSet(viewsets.ModelViewSet):
     queryset = Cliente.objects.all()
     serializer_class = ClienteSerializer
 
 
-class ClienteDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Cliente.objects.all()
-    serializer_class = ClienteSerializer
-
-
-class EnderecoList(generics.ListCreateAPIView):
+class EnderecoViewSet(viewsets.ModelViewSet):
     queryset = Endereco.objects.all()
     serializer_class = EnderecoSerializer
 
 
-class EnderecoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Endereco.objects.all()
-    serializer_class = EnderecoSerializer
-
-
-class EstabelecimentoList(generics.ListCreateAPIView):
+class EstabelecimentoViewSet(viewsets.ModelViewSet):
     queryset = Estabelecimento.objects.all()
     serializer_class = EstabelecimentoSerializer
 
 
-class EstabelecimentoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Estabelecimento.objects.all()
-    serializer_class = EstabelecimentoSerializer
-
-
-class FormaPagamentoList(generics.ListCreateAPIView):
+class FormaPagamentoViewSet(viewsets.ModelViewSet):
     queryset = FormaPagamento.objects.all()
     serializer_class = FormaPagamentoSerializer
 
 
-class FormaPagamentoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = FormaPagamento.objects.all()
-    serializer_class = FormaPagamentoSerializer
-
-
-class OfertaList(generics.ListCreateAPIView):
+class OfertaViewSet(viewsets.ModelViewSet):
     queryset = Oferta.objects.all()
     serializer_class = OfertaSerializer
 
 
-class OfertaDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Oferta.objects.all()
-    serializer_class = OfertaSerializer
-
-
-class PedidoList(generics.ListCreateAPIView):
+class PedidoViewSet(viewsets.ModelViewSet):
     queryset = Pedido.objects.all()
     serializer_class = PedidoSerializer
 
 
-class PedidoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Pedido.objects.all()
-    serializer_class = PedidoSerializer
-
-
-class PratoList(generics.ListCreateAPIView):
-    queryset = Prato.objects.all()
-    serializer_class = PratoSerializer
-
-
-class PratoDetail(generics.RetrieveUpdateDestroyAPIView):
+class PratoViewSet(viewsets.ModelViewSet):
     queryset = Prato.objects.all()
     serializer_class = PratoSerializer
