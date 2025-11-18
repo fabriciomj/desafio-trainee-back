@@ -88,14 +88,12 @@ class Oferta(models.Model):
 
 class Pedido(models.Model):
     class Status(models.TextChoices):
-        PAGAMENTO = "PM", "Aguardando Pagamento"
-        PAGO = "PG", "Pago"
         RECEBIDO = "RE", "Pedido Recebido"
         PREPARANDO = "PR", "Pedido em Preparo"
         DELIVERY = "DL", "À Caminho"
         ENTREGUE = "EN", "Entregue"
 
-    status = models.CharField(max_length=2, choices=Status, default=Status.PAGAMENTO)
+    status = models.CharField(max_length=2, choices=Status, default=Status.RECEBIDO)
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ofertas = models.ManyToManyField(Oferta)
