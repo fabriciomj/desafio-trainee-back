@@ -20,13 +20,13 @@ class CarrinhoSerializer(serializers.ModelSerializer):
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields = ["nome", "telefone", "formas_pagamento", "carrinho", "enderecos"]
+        fields = ["nome", "telefone", "endereco", "formas_pagamento", "carrinho"]
 
 
 class EstabelecimentoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estabelecimento
-        fields = ["cnpj", "razao_social", "nome_fantasia", "telefone", "endereco"]
+        fields = ["url", "nome", "endereco"]
 
 
 class FormaPagamentoSerializer(serializers.ModelSerializer):
