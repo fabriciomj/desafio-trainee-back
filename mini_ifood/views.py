@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import generics, permissions, viewsets
 
-from fabricio.mini_ifood.models import (
+from mini_ifood.models import (
     Carrinho,
     Cliente,
     Endereco,
@@ -11,7 +11,7 @@ from fabricio.mini_ifood.models import (
     Pedido,
     Prato,
 )
-from fabricio.mini_ifood.serializers import (
+from mini_ifood.serializers import (
     CarrinhoSerializer,
     ClienteSerializer,
     EnderecoSerializer,
