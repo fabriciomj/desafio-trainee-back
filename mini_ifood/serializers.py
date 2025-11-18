@@ -15,7 +15,7 @@ from mini_ifood.models import (
 class CarrinhoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrinho
-        fields = ["ofertas"]
+        fields = ["ofertas", "estabelecimento"]
 
 
 class ClienteSerializer(serializers.ModelSerializer):

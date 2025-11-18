@@ -3,9 +3,6 @@ config:
   theme: dark
 ---
 erDiagram
-  User["django.contrib.auth.models.User"] {
-  }
-
   Cliente {
     int id_cliente
     string nome
@@ -61,8 +58,6 @@ erDiagram
     int id_carrinho
   }
 
-  User ||--o| Cliente : "do tipo"
-  User ||--o| Estabelecimento : "do tipo"
   Cliente }|--o{ Forma_Pagamento : cadastra
   Estabelecimento |o--|| Endereco : "localizado em"
   Cliente }|--|{ Endereco : "recebe em"
@@ -73,3 +68,4 @@ erDiagram
   Cliente ||--o{ Pedido : realiza
   Estabelecimento ||--o{ Pedido : recebe
   Estabelecimento ||--|{ Prato : prepara
+  Carrinho }o--|| Estabelecimento : vinculado

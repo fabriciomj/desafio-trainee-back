@@ -84,6 +84,7 @@ class Prato(models.Model):
 
 class Carrinho(models.Model):
     ofertas = models.ManyToManyField("Oferta", blank=True)
+    estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
 
 
 class Oferta(models.Model):
