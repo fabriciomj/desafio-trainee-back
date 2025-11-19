@@ -33,6 +33,9 @@ class Cliente(models.Model):
     formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
     carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.nome
+
 
 class Estabelecimento(models.Model):
     NOME_EMPRESA_PAT = re.compile(
@@ -51,6 +54,9 @@ class Estabelecimento(models.Model):
     endereco = models.CharField(max_length=100)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome
+
 
 class FormaPagamento(models.Model):
     numero_cartao = models.CharField(
@@ -59,6 +65,9 @@ class FormaPagamento(models.Model):
     nome_titular = models.CharField(
         max_length=20, validators=[RegexValidator(NOME_PESSOA_PAT)]
     )
+
+    def __str__(self):
+        return self.numero_cartao
 
     def save(self, **kwargs):  # pyright: ignore[reportIncompatibleMethodOverride]
         self.nome_titular = self.nome_titular.capitalize()
@@ -70,10 +79,16 @@ class Prato(models.Model):
     ingredientes = models.TextField()
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.nome
+
 
 class Carrinho(models.Model):
     ofertas = models.ManyToManyField("Oferta", blank=True)
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Seu Carrinho - {self.estabelecimento.nome}"
 
 
 class Oferta(models.Model):
@@ -81,6 +96,9 @@ class Oferta(models.Model):
     valor = models.DecimalField(max_digits=7, decimal_places=2)
     quantidade = models.PositiveIntegerField()
     prato = models.ForeignKey(Prato, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.prato.estabelecimento.nome} - {self.prato.nome} ({self.data})"
 
 
 class Pedido(models.Model):
@@ -95,3 +113,6 @@ class Pedido(models.Model):
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ofertas = models.ManyToManyField(Oferta)
+
+    def __str__(self):
+        return f"{self.cliente.nome} - {self.estabelecimento.nome} ({self.data})"
