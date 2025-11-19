@@ -38,7 +38,7 @@ class FormaPagamentoSerializer(serializers.ModelSerializer):
 class OfertaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Oferta
-        fields = ["data", "valor", "quantidade", "prato"]
+        fields = ["url", "data", "valor", "quantidade", "prato"]
 
 
 class PedidoSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class PedidoSerializer(serializers.ModelSerializer):
         fields = ["status", "estabelecimento", "cliente", "ofertas"]
 
 
-class PratoSerializer(serializers.ModelSerializer):
+class PratoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Prato
-        fields = ["nome", "ingredientes", "estabelecimento"]
+        fields = ["url", "nome", "ingredientes", "estabelecimento"]
