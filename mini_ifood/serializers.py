@@ -5,10 +5,17 @@ from mini_ifood.models import (
     Cliente,
     Estabelecimento,
     FormaPagamento,
+    MyUser,
     Oferta,
     Pedido,
     Prato,
 )
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ["url", "username", "email", "tipo"]
 
 
 class CarrinhoSerializer(serializers.ModelSerializer):

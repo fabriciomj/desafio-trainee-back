@@ -1,6 +1,6 @@
 import re
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -13,6 +13,14 @@ NOME_PESSOA_PAT = re.compile(
     """,
     re.VERBOSE,
 )
+
+
+class MyUser(AbstractUser):
+    class TipoUsuario(models.TextChoices):
+        CLIENTE = "CL", "Cliente"
+        ESTABELECIMENTO = "ES", "Estabelecimento"
+
+    tipo = models.CharField(max_length=2, choices=TipoUsuario)
 
 
 class Cliente(models.Model):
@@ -29,7 +37,7 @@ class Cliente(models.Model):
         max_length=11, unique=True, validators=[RegexValidator(TELEFONE_PAT)]
     )
     endereco = models.CharField(max_length=100)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
     formas_pagamento = models.ManyToManyField("FormaPagamento", blank=True)
     carrinho = models.OneToOneField("Carrinho", on_delete=models.PROTECT)
 
@@ -52,7 +60,7 @@ class Estabelecimento(models.Model):
         max_length=50, validators=[RegexValidator(NOME_EMPRESA_PAT)], blank=True
     )
     endereco = models.CharField(max_length=100)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
