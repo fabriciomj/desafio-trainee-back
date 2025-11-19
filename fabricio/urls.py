@@ -10,11 +10,11 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("", include("mini_ifood.urls")),
-    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
-        "api/swagger/",
+        "swagger/",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
     ),
