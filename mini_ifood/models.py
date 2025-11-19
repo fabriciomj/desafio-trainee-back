@@ -91,6 +91,7 @@ class Pedido(models.Model):
         ENTREGUE = "EN", "Entregue"
 
     status = models.CharField(max_length=2, choices=Status, default=Status.RECEBIDO)
+    data = models.DateField(auto_now_add=True)
     estabelecimento = models.ForeignKey(Estabelecimento, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     ofertas = models.ManyToManyField(Oferta)
